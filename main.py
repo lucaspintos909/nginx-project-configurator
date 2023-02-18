@@ -1,4 +1,5 @@
 # importing required modules
+import os
 import sys
 import argparse
 import shutil
@@ -15,6 +16,11 @@ parser.add_argument("--domains", nargs="+", type=str, metavar="str",
 args = parser.parse_args()
 
 columns = shutil.get_terminal_size().columns
+
+if not os.geteuid() == 0:
+    print("\n**** Error: Debes correr el script como usuario root. \n")
+    sys.exit()
+
 
 domains = args.domains
 
