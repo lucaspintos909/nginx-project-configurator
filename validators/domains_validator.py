@@ -15,3 +15,16 @@ def domains_validator(domains: list) -> dict:
     result = {"message": error_message, "valid": valid}
 
     return result
+
+def redirect_domain_validator(domain: str) -> dict:
+    # TODO: Validar dominio con REGEX
+    valid = True
+    error_message = ""
+
+    if valid and "www" in domain:
+        error_message += "\n**** Error: Debes indicar un dominio sin prefijo www.\n**** Ejemplo: example.com\n"
+        valid = False
+
+    result = {"message": error_message, "valid": valid}
+
+    return result
