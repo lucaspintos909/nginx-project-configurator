@@ -1,5 +1,6 @@
 
 def domains_validator(domains: list) -> dict:
+    # TODO: Validar dominio con REGEX
     valid = True
     error_message = ""
 
