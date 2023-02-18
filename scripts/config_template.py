@@ -49,6 +49,44 @@ server {{
     return template
 
 
+def get_config_redirection_template(www_domain: str, non_www_domain: str, redirection: str) -> str:
+    template = f"""
+server {{
+    server_name {non_www_domain};
+
+    location / {{
+        try_files $uri $uri/ =404;
+    }}
+
+    location ~ /\.ht {{
+        deny all;
+    }}
+
+    return 301 $scheme://{redirection}$request_uri;
+
+    listen 80;
+}}
+
+server {{
+    server_name {www_domain};
+    
+    location / {{
+        try_files $uri $uri/ =404;
+    }}
+
+    location ~ /\.ht {{
+        deny all;
+    }}
+
+    return 301 $scheme://{redirection}$request_uri;
+
+    listen 80;
+}}
+
+"""
+    return template
+
+
 def get_html_template(non_www_domain: str) -> str:
     template = f"""
 <!DOCTYPE html>
