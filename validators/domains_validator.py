@@ -9,7 +9,7 @@ def domains_validator(domains: list) -> dict:
         valid = False
 
     if valid and "www" not in domains[0] and "www" not in domains[1]:
-        error_message += "\n**** Error: Debes indicar un dominio con prefijo www.****\nEjemplo: www.example.com\n"
+        error_message += "\n**** Error: Debes indicar un dominio con prefijo www.\n**** Ejemplo: www.example.com\n"
         valid = False
 
     result = {"message": error_message, "valid": valid}
