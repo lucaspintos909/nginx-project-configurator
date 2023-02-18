@@ -1,5 +1,4 @@
 # importing required modules
-import os
 import sys
 import argparse
 import shutil
@@ -29,15 +28,3 @@ nginx_configuration_result = write_nginx_configuration(domains)
 if not nginx_configuration_result["valid"]:
     print(nginx_configuration_result["message"])
     sys.exit()
-
-""" if not result["valid"]:
-  print(f"**** Error: {result['message']}".center(columns))
-  sys.exit()
-
-if os.name == "posix":
-  os.system("clear")
-else:
-  os.system("cls") """
-
-""" print(f"Password: {result['password']} \n".center(columns))
-print(f"**** The password has been copied to the clipboard! ****".center(columns)) """
