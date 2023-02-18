@@ -12,7 +12,10 @@ def get_nginx_configuration(domains: list) -> str:
     return configuration
 
 # TODO: Hacer validaciones de si los comandos se ejecutan de manera correcta
+
+
 def write_nginx_configuration(domains:  str) -> dict:
+    errors = False
     # Obtengo dominio sin prefijo www
     non_www_domain = domains[0] if not "www" in domains[0] else domains[1]
 
@@ -27,10 +30,17 @@ def write_nginx_configuration(domains:  str) -> dict:
 
     # Si no existe creo link simbolico para habilitar la configuracion
     if not os.path.exists(f"{NGINX_PATH}/sites-enabled/{non_www_domain}"):
-        os.symlink(nginx_file_path, f"{NGINX_PATH}/sites-enabled/{non_www_domain}")
+        os.symlink(nginx_file_path,
+                   f"{NGINX_PATH}/sites-enabled/{non_www_domain}")
+
+    # Chequeo si la configuracion de nginx esta bien
+    ext_code = os.system("nginx -t")
 
     # Reinicio servicio de NGINX
-    os.system("systemctl restart nginx")
+    if ext_code == 0:
+        os.system("systemctl restart nginx")
+    else: 
+        errors = True
 
     # Verifico si existe el directorio del proyecto
     # y si no existe lo creo
@@ -43,5 +53,5 @@ def write_nginx_configuration(domains:  str) -> dict:
         with open(f"{project_path}/index.html", "w") as html_file:
             html_file.write(html_template)
 
-    result = {"message": "", "valid": True}
+    result = {"message": "", "valid": not errors}
     return result
