@@ -1,1 +1,2 @@
 from .domains_validator import domains_validator
+from .domains_validator import redirect_domain_validator
