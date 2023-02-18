@@ -25,8 +25,9 @@ def write_nginx_configuration(domains:  str) -> dict:
     with open(nginx_file_path, "w") as conf_file:
         conf_file.write(nginx_conf_string)
 
-    # Creo link simbolico para habilitar la configuracion
-    os.symlink(nginx_file_path, f"{NGINX_PATH}/sites-enabled/{non_www_domain}")
+    # Si no existe creo link simbolico para habilitar la configuracion
+    if not os.path.exists(f"{NGINX_PATH}/sites-enabled/{non_www_domain}"):
+        os.symlink(nginx_file_path, f"{NGINX_PATH}/sites-enabled/{non_www_domain}")
 
     # Reinicio servicio de NGINX
     os.system("systemctl restart nginx")
